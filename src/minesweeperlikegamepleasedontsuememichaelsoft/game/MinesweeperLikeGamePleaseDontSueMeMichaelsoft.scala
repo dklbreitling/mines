@@ -94,7 +94,7 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 		if (mouseButton == PConstants.LEFT)
 			gameLogic.uncoverTile(currentMousePositionAsPoint)
 		else if (mouseButton == PConstants.RIGHT)
-			gameLogic.addFlag(currentMousePositionAsPoint)
+			gameLogic.flag(currentMousePositionAsPoint)
 	}
 
 	override def settings(): Unit =
