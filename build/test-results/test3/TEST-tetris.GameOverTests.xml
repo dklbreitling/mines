@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tetris.GameOverTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2021-10-03T21:57:41" hostname="davemeister" time="0.005">
+  <properties/>
+  <testcase name="testGameOver" classname="tetris.GameOverTests" time="0.002"/>
+  <testcase name="testNoEscapeGameOver" classname="tetris.GameOverTests" time="0.001"/>
+  <testcase name="testNoEscapeGameOver2" classname="tetris.GameOverTests" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

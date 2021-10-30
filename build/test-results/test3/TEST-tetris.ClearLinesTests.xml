@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tetris.ClearLinesTests" tests="5" skipped="0" failures="0" errors="0" timestamp="2021-10-03T21:57:41" hostname="davemeister" time="0.012">
+  <properties/>
+  <testcase name="testClear1Line" classname="tetris.ClearLinesTests" time="0.002"/>
+  <testcase name="testClear1LineMiddle" classname="tetris.ClearLinesTests" time="0.003"/>
+  <testcase name="testClear2Lines" classname="tetris.ClearLinesTests" time="0.002"/>
+  <testcase name="testClear3Lines" classname="tetris.ClearLinesTests" time="0.001"/>
+  <testcase name="testClear4Lines" classname="tetris.ClearLinesTests" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
