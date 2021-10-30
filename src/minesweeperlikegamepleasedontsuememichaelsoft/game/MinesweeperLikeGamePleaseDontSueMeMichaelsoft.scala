@@ -17,12 +17,21 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 	val widthInPixels: Int = (WidthCellInPixels * gridDims.width).ceil.toInt
 	val heightInPixels: Int = (HeightCellInPixels * gridDims.height).ceil.toInt
 	val screenArea: Rectangle = Rectangle(Point(0, 0), widthInPixels.toFloat, heightInPixels.toFloat)
+	var gameOver: Boolean = false
 
 	override def draw(): Unit =
 	{
-		updateState()
-		drawGrid()
-		if (gameLogic.isGameOver) drawGameOverScreen()
+		if (!gameOver) {
+			updateState()
+			drawGrid()
+			if (gameLogic.isGameOver) {
+				gameLogic.uncoverAllBombs()
+				updateState()
+				drawGrid()
+				drawGameOverScreen()
+				gameOver = true
+			}
+		}
 	}
 
 	def drawGameOverScreen(): Unit =
@@ -56,7 +65,8 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 			setFillColor(color)
 			drawRectangle(area)
 			setFillColor(Color.Black)
-			if (tile.cellType == Visible) drawText(tile.count.toString, area.center)
+			if (tile.cellType == Visible && tile.count > 0) drawText(tile.count.toString, area.center)
+			if (tile.cellType == Visible && tile.hasBomb) drawEllipse(area)
 		}
 	}
 
@@ -81,11 +91,10 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 
 	override def mouseClicked() : Unit =
 	{
-		var thisDoesNothing = 0
 		if (mouseButton == PConstants.LEFT)
 			gameLogic.uncoverTile(currentMousePositionAsPoint)
-		else if (mouseButton == PConstants.RIGHT) // add flag
-			thisDoesNothing = 0
+		else if (mouseButton == PConstants.RIGHT)
+			gameLogic.addFlag(currentMousePositionAsPoint)
 	}
 
 	override def settings(): Unit =
@@ -118,9 +127,7 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 		color match {
 			case Hidden => Color.Gray
 			case Visible => Color.White
-			case Empty => Color.White
 			case Flag => Color.Red
-			case Bomb => Color.Black
 		}
 }
 

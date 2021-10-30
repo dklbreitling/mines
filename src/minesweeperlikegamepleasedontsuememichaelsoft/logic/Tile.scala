@@ -1,3 +1,3 @@
 package minesweeperlikegamepleasedontsuememichaelsoft.logic
 
-case class Tile(cellType: CellType, count: Int = 0) {}
+case class Tile(cellType: CellType, count: Int = 0, hasBomb: Boolean = false) {}
