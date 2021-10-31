@@ -7,7 +7,8 @@ case class GameState(
                     board: Seq[Seq[Tile]],
                     numMines: Int,
                     gameOver: Boolean = false,
-                    initialTile: Boolean = true
+                    initialTileSet: Boolean = true,
+                    initialTile: Point = Point(-1, -1)
                     ) {}
 
 object GameState {}

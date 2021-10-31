@@ -21,16 +21,12 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 
 	override def draw(): Unit =
 	{
-		if (!gameOver) {
-			updateState()
-			drawGrid()
-			if (gameLogic.isGameOver) {
-				gameLogic.uncoverAllBombs()
-				updateState()
-				drawGrid()
-				drawGameOverScreen()
-				gameOver = true
-			}
+		updateState()
+		drawGrid()
+		if (gameLogic.isGameOver) {
+			gameLogic.uncoverNextBomb()
+			drawGameOverScreen()
+			gameOver = true
 		}
 	}
 
@@ -46,7 +42,7 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 		val heightPerCell = screenArea.height / gridDims.height
 
 		for (p <- gridDims.allPointsInside) {
-			if (p == currentMousePositionAsPoint)
+			if (p == currentMousePositionAsPoint && !gameOver)
 				drawCell(getCell(p), gameLogic.getTile(p), decreaseAlpha = true)
 			else
 				drawCell(getCell(p), gameLogic.getTile(p))
@@ -65,16 +61,21 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 			setFillColor(color)
 			drawRectangle(area)
 			setFillColor(Color.Black)
-			if (tile.cellType == Visible && tile.count > 0) drawText(tile.count.toString, area.center)
-			if (tile.cellType == Visible && tile.hasBomb) drawEllipse(area)
+			if (tile.hasFlag) {
+				setFillColor(Color.Red)
+				drawRectangle(area)
+				setFillColor(Color.Black)
+			}
+			if (tile.cellType == Visible && tile.count > 0)
+				drawTextCentered(tile.count.toString, size = 18, Point(area.center.x, area.center.y + 8))
+			if (tile.hasBomb && tile.cellType != Hidden) {
+				drawEllipse(area)
+			}
 		}
 	}
 
 	def currentMousePositionAsPoint: GridPoint =
-	{
 		GridPoint(math.floor(mouseX / WidthCellInPixels).toInt, math.floor(mouseY / WidthCellInPixels).toInt)
-	}
-
 
 	/** Method that calls handlers for different key press events.
 	  * You may add extra functionality for other keys here.
@@ -89,12 +90,14 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 		}
 	}
 
-	override def mouseClicked() : Unit =
+	override def mouseClicked(): Unit =
 	{
-		if (mouseButton == PConstants.LEFT)
-			gameLogic.uncoverTile(currentMousePositionAsPoint)
-		else if (mouseButton == PConstants.RIGHT)
-			gameLogic.flag(currentMousePositionAsPoint)
+		if (!gameOver) {
+			if (mouseButton == PConstants.LEFT)
+				gameLogic.uncoverTile(currentMousePositionAsPoint)
+			else if (mouseButton == PConstants.RIGHT)
+				gameLogic.flag(currentMousePositionAsPoint)
+		}
 	}
 
 	override def settings(): Unit =
@@ -127,7 +130,6 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 		color match {
 			case Hidden => Color.Gray
 			case Visible => Color.White
-			case Flag => Color.Red
 		}
 }
 
