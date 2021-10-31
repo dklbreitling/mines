@@ -8,7 +8,8 @@ case class GameState(
                     numMines: Int,
                     gameOver: Boolean = false,
                     initialTileSet: Boolean = true,
-                    initialTile: Point = Point(-1, -1)
+                    initialTile: Point = Point(-1, -1),
+                    isInMenu: Boolean = true
                     ) {}
 
 object GameState {}

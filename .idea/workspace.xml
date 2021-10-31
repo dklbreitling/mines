@@ -12,13 +12,15 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/Readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/game/MinesweeperLikeGamePleaseDontSueMeMichaelsoft$.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/game/MinesweeperLikeGamePleaseDontSueMeMichaelsoft$.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/game/MinesweeperLikeGamePleaseDontSueMeMichaelsoft.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/game/MinesweeperLikeGamePleaseDontSueMeMichaelsoft.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/logic/GameState$.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/logic/GameState$.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/logic/GameState.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/logic/GameState.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/logic/MinesweeperLogic$.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/logic/MinesweeperLogic$.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/logic/MinesweeperLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/logic/MinesweeperLogic.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/scala/compilerAnalysis/compileScala.analysis" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/scala/compilerAnalysis/compileScala.analysis" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/game/MinesweeperLikeGamePleaseDontSueMeMichaelsoft.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/game/MinesweeperLikeGamePleaseDontSueMeMichaelsoft.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/logic/GameState.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/logic/GameState.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/logic/MinesweeperLogic.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/logic/MinesweeperLogic.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -121,7 +123,7 @@
       <updated>1635525259417</updated>
       <workItem from="1635525261153" duration="692000" />
       <workItem from="1635613152825" duration="11928000" />
-      <workItem from="1635685231909" duration="17332000" />
+      <workItem from="1635685231909" duration="22711000" />
     </task>
     <servers />
   </component>

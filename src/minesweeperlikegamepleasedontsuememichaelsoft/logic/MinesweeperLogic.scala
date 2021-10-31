@@ -5,17 +5,17 @@ import minesweeperlikegamepleasedontsuememichaelsoft.logic.MinesweeperLogic._
 
 class MinesweeperLogic(val randomGen: RandomGenerator,
                        val gridDims: Dimensions,
-                       val initialBoard: Seq[Seq[Tile]]) {
-
-	def this(random: RandomGenerator, gridDims: Dimensions) =
-		this(random, gridDims, makeEmptyBoard(gridDims))
+                       val initialBoard: Seq[Seq[Tile]],
+                       val inMenu: Boolean) {
 
 	def this() =
-		this(new ScalaRandomGen(), DefaultDims, makeEmptyBoard(DefaultDims))
+		this(new ScalaRandomGen(), DefaultDims, makeEmptyBoard(DefaultDims), true)
 
-	var currentGameState: GameState = GameState(gridDims, initialBoard, DefaultNumMines)
+	var currentGameState: GameState = GameState(gridDims, initialBoard, if (gridDims == EasyDims) EasyNumMines else if (gridDims == HardDims) HardNumMines else DefaultNumMines, isInMenu = inMenu)
 
-	def isGameRunning: Boolean = !(currentGameState.gameOver || (hasWon && currentGameState.initialTileSet))
+	def isGameRunning: Boolean = !(currentGameState.gameOver || (hasWon && currentGameState.initialTileSet)) && !currentGameState.isInMenu
+
+	def isInMenu: Boolean = currentGameState.isInMenu
 
 	def generateMines(): Unit =
 	{
@@ -77,10 +77,7 @@ class MinesweeperLogic(val randomGen: RandomGenerator,
 	}
 
 	def hasWon: Boolean =
-	{
-		println(allHiddenBombs.forall(p => getTile(p).hasFlag) && currentlyFreeTiles.isEmpty && !currentGameState.gameOver)
 		allHiddenBombs.forall(p => getTile(p).hasFlag) && currentlyFreeTiles.isEmpty && !currentGameState.gameOver
-	}
 
 	def neighborsOfPoint(point: Point): Seq[Point] =
 		NeighborOffsets.map(_ + point).filter(p => gridDims.allPointsInside.contains(p))
@@ -165,7 +162,8 @@ object MinesweeperLogic {
 
 	def apply() = new MinesweeperLogic(new ScalaRandomGen(),
 	                                   DefaultDims,
-	                                   makeEmptyBoard(DefaultDims))
+	                                   makeEmptyBoard(DefaultDims),
+	                                   true)
 
 	val NeighborOffsets: Seq[Point] = Seq(Point(-1, -1), Point(-1, 0), Point(-1, 1), Point(1, 0), Point(0, 1), Point(0, -1), Point(1, 1), Point(1, -1))
 }

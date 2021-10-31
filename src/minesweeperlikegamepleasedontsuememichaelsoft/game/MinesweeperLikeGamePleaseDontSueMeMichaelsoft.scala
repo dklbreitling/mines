@@ -2,6 +2,7 @@ package minesweeperlikegamepleasedontsuememichaelsoft.game
 
 import engine.GameBase
 import engine.graphics.{Color, Point, Rectangle}
+import engine.random.ScalaRandomGen
 import minesweeperlikegamepleasedontsuememichaelsoft.game.MinesweeperLikeGamePleaseDontSueMeMichaelsoft._
 import minesweeperlikegamepleasedontsuememichaelsoft.logic.{Point => GridPoint, _}
 import processing.core.{PApplet, PConstants}
@@ -14,23 +15,71 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 
 	var gameLogic: MinesweeperLogic = MinesweeperLogic()
 	val updateTimer = new UpdateTimer(MinesweeperLogic.FramesPerSecond.toFloat)
-	val gridDims: Dimensions = gameLogic.gridDims
-	val widthInPixels: Int = (WidthCellInPixels * gridDims.width).ceil.toInt
-	val heightInPixels: Int = (HeightCellInPixels * gridDims.height).ceil.toInt
-	val screenArea: Rectangle = Rectangle(Point(0, 0), widthInPixels.toFloat, heightInPixels.toFloat)
+	var gridDims: Dimensions = MinesweeperLogic.DefaultDims
+	var widthInPixels: Int = (WidthCellInPixels * gridDims.width).ceil.toInt
+	var heightInPixels: Int = (HeightCellInPixels * gridDims.height).ceil.toInt
+	var screenArea: Rectangle = Rectangle(Point(0, 0), widthInPixels.toFloat, heightInPixels.toFloat)
 	var gameOver: Boolean = false
+	val topArea: Rectangle = Rectangle(Point(10, 10), widthInPixels.toFloat - 20, (heightInPixels.toFloat / 3) - 13.33f)
+	val midArea: Rectangle = Rectangle(Point(10, (heightInPixels.toFloat / 3) + 6.67f), widthInPixels.toFloat - 20, (heightInPixels.toFloat / 3) - 13.33f)
+	val bottomArea: Rectangle = Rectangle(Point(10, (2 * (heightInPixels.toFloat / 3)) + 3.33f), widthInPixels.toFloat - 20, (heightInPixels.toFloat / 3) - 13.33f)
+
+	def reinitSize() : Unit =
+	{
+		widthInPixels = (WidthCellInPixels * gridDims.width).ceil.toInt
+		heightInPixels = (HeightCellInPixels * gridDims.height).ceil.toInt
+		screenArea = Rectangle(Point(0, 0), widthInPixels.toFloat, heightInPixels.toFloat)
+		surface.setSize(widthInPixels, heightInPixels)
+	}
 
 	override def draw(): Unit =
 	{
-		updateState()
-		drawGrid()
-		if (gameLogic.isGameOver) {
-			gameLogic.uncoverNextBomb()
-			drawGameOverScreen()
-			gameOver = true
-		} else if (gameLogic.hasWon) {
-
+		if (gameLogic.isInMenu) {
+			drawMenu()
+		} else {
+			updateState()
+			drawGrid()
+			if (gameLogic.isGameOver) {
+				gameLogic.uncoverNextBomb()
+				drawGameOverScreen()
+				gameOver = true
+			} else if (gameLogic.hasWon) {
+				drawGameWonScreen()
+			}
 		}
+	}
+
+	def drawMenu(): Unit =
+	{
+		setFillColor(Color.Black)
+		drawRectangle(screenArea)
+		drawEasyBox()
+		drawMediumBox()
+		drawHardBox()
+	}
+
+	def drawEasyBox(): Unit =
+	{
+		setFillColor(Color.decreaseAlpha(Color.Gray))
+		drawRectangle(topArea)
+		setFillColor(Color.Red)
+		drawTextCentered("EASY\n8x8, 10 mines", 40, Point(topArea.center.x, topArea.center.y + 8))
+	}
+
+	def drawMediumBox(): Unit =
+	{
+		setFillColor(Color.decreaseAlpha(Color.Gray))
+		drawRectangle(midArea)
+		setFillColor(Color.Red)
+		drawTextCentered("MEDIUM\n16x16, 40 mines", 40, Point(midArea.center.x, midArea.center.y + 8))
+	}
+
+	def drawHardBox(): Unit =
+	{
+		setFillColor(Color.decreaseAlpha(Color.Gray))
+		drawRectangle(bottomArea)
+		setFillColor(Color.Red)
+		drawTextCentered("HARD\n30x16, 99 mines", 40, Point(bottomArea.center.x, bottomArea.center.y + 8))
 	}
 
 	def drawGameOverScreen(): Unit =
@@ -50,11 +99,13 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 		val widthPerCell = screenArea.width / gridDims.width
 		val heightPerCell = screenArea.height / gridDims.height
 
-		for (p <- gridDims.allPointsInside) {
-			if (p == currentMousePositionAsPoint && gameLogic.isGameRunning)
-				drawCell(getCell(p), gameLogic.getTile(p), decreaseAlpha = true)
-			else
-				drawCell(getCell(p), gameLogic.getTile(p))
+		if (!gameLogic.isInMenu) {
+			for (p <- gameLogic.gridDims.allPointsInside) {
+				if (p == currentMousePositionAsPoint && gameLogic.isGameRunning)
+					drawCell(getCell(p), gameLogic.getTile(p), decreaseAlpha = true)
+				else
+					drawCell(getCell(p), gameLogic.getTile(p))
+			}
 		}
 
 		def getCell(p: GridPoint): Rectangle =
@@ -86,6 +137,11 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 	def currentMousePositionAsPoint: GridPoint =
 		GridPoint(math.floor(mouseX / WidthCellInPixels).toInt, math.floor(mouseY / WidthCellInPixels).toInt)
 
+	def isMouseInArea(area: Rectangle): Boolean =
+	{
+		mouseX >= area.leftUp.x && mouseY >= area.leftUp.y && mouseX <= area.leftUp.x + area.width && mouseY <= area.leftUp.y + area.height
+	}
+
 	/** Method that calls handlers for different key press events.
 	  * You may add extra functionality for other keys here.
 	  * See [[event.KeyEvent]] for all defined keycodes.
@@ -95,12 +151,14 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 	override def keyPressed(event: KeyEvent): Unit =
 	{
 		event.getKeyCode match {
-			 case VK_R     => {
-			 	if (!gameLogic.isGameRunning) {
-			 		gameLogic = MinesweeperLogic()
-			 		gameOver = false
-			 	}
-			 }
+			case VK_R => {
+				if (!gameLogic.isGameRunning) {
+					gameLogic = MinesweeperLogic()
+					gameOver = false
+					gridDims = MinesweeperLogic.DefaultDims
+					reinitSize()
+				}
+			}
 			case _ => ()
 		}
 	}
@@ -112,6 +170,29 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 				gameLogic.uncoverTile(currentMousePositionAsPoint)
 			else if (mouseButton == PConstants.RIGHT)
 				gameLogic.flag(currentMousePositionAsPoint)
+		} else if (gameLogic.isInMenu && mouseButton == PConstants.LEFT) {
+			if (isMouseInArea(topArea)) {
+				gameLogic = new MinesweeperLogic(new ScalaRandomGen(),
+				                                 MinesweeperLogic.EasyDims,
+				                                 MinesweeperLogic.makeEmptyBoard(MinesweeperLogic.EasyDims),
+				                                 false)
+				gridDims = MinesweeperLogic.EasyDims
+				reinitSize()
+			} else if (isMouseInArea(midArea)) {
+				gameLogic = new MinesweeperLogic(new ScalaRandomGen(),
+				                                 MinesweeperLogic.DefaultDims,
+				                                 MinesweeperLogic.makeEmptyBoard(MinesweeperLogic.DefaultDims),
+				                                 false)
+				gridDims = MinesweeperLogic.DefaultDims
+				reinitSize()
+			} else if (isMouseInArea(bottomArea)) {
+				gameLogic = new MinesweeperLogic(new ScalaRandomGen(),
+				                                 MinesweeperLogic.HardDims,
+				                                 MinesweeperLogic.makeEmptyBoard(MinesweeperLogic.HardDims),
+				                                 false)
+				gridDims = MinesweeperLogic.HardDims
+				reinitSize()
+			}
 		}
 	}
 
@@ -131,6 +212,7 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 		// This should be called last, since the game
 		// clock is officially ticking at this point
 		updateTimer.init()
+		surface.setResizable(true)
 	}
 
 	def updateState(): Unit =
