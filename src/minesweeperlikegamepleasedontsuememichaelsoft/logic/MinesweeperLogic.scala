@@ -98,7 +98,10 @@ class MinesweeperLogic(val randomGen: RandomGenerator,
 		currentGameState = currentGameState.copy(board = addTileToBoardAtPoint(point, getTile(point).copy(cellType = Visible)))
 
 	def flag(point: Point): Unit =
-		currentGameState = currentGameState.copy(board = addTileToBoardAtPoint(point, getTile(point).copy(hasFlag = !getTile(point).hasFlag)))
+	{
+		if (getTile(point).cellType == Hidden)
+			currentGameState = currentGameState.copy(board = addTileToBoardAtPoint(point, getTile(point).copy(hasFlag = !getTile(point).hasFlag)))
+	}
 
 	def addTileToBoardAtPoint(point: Point, tile: Tile): Seq[Seq[Tile]] =
 		currentGameState.board.updated(point.y, currentGameState.board(point.y).updated(point.x, tile))

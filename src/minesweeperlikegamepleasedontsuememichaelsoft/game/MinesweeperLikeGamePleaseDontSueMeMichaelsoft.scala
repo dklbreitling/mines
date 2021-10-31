@@ -91,7 +91,7 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 	def drawGameWonScreen(): Unit =
 	{
 		setFillColor(Color.Green)
-		drawTextCentered("YOU WON!\nPress 'Q' to exit.", 20, screenArea.center)
+		drawTextCentered("YOU WON!", 20, screenArea.center)
 	}
 
 	def drawGrid(): Unit =
