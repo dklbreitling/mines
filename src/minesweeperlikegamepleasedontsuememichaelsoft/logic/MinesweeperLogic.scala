@@ -13,9 +13,9 @@ class MinesweeperLogic(val randomGen: RandomGenerator,
 	def this() =
 		this(new ScalaRandomGen(), DefaultDims, makeEmptyBoard(DefaultDims))
 
-	var currentGameState: GameState = GameState(gridDims, initialBoard)
+	var currentGameState: GameState = GameState(gridDims, initialBoard, DefaultNumMines)
 
-	for (_ <- 0 until DefaultNumMines) {
+	for (_ <- 0 until currentGameState.numMines) {
 		val p = currentlyFreeTiles(randomGen.randomInt(currentlyFreeTiles.size))
 		currentGameState = currentGameState.copy(board = addTileToBoardAtPoint(p, newBomb))
 		incrementCountersAroundPoint(p)
@@ -46,10 +46,40 @@ class MinesweeperLogic(val randomGen: RandomGenerator,
 
 	def uncoverTile(point: Point): Unit =
 	{
-		currentGameState = currentGameState.copy(board = addTileToBoardAtPoint(point, getTile(point).copy(cellType = Visible)))
-		if (getTile(point).hasBomb)
-			currentGameState = currentGameState.copy(gameOver = true)
+		if (currentGameState.initialTile) {
+			currentGameState = currentGameState.copy(initialTile = false)
+			val numTilesToUncover = randomGen.randomInt((gridDims.width * gridDims.height * 0.2).toInt)
+			var neighbors = NeighborOffsets.map(_ + point).filter(p => gridDims.allPointsInside.contains(p))
+			uncoverTilesAroundPoint(point)
+		} else {
+			openTile(point)
+			if (getTile(point).hasBomb)
+				currentGameState = currentGameState.copy(gameOver = true)
+		}
 	}
+
+	def uncoverTilesAroundPoint(point: Point) : Unit =
+	{
+		openTile(point)
+		val neighborsWithBombs: Seq[Point] = uncoverAllNeighborsAndReturnNeighborsWithBombs(point)
+		for (p <- neighborsWithBombs)
+			uncoverAllNeighborsAndReturnNeighborsWithBombs(p)
+	}
+
+	def uncoverAllNeighborsAndReturnNeighborsWithBombs(point: Point): Seq[Point] =
+	{
+		var neighborsWithBombs : Seq[Point] = Seq()
+		for (p <- NeighborOffsets.map(_ + point).filter(p => gridDims.allPointsInside.contains(p))) {
+			if (!getTile(p).hasBomb)
+				openTile(p)
+			else
+				neighborsWithBombs = neighborsWithBombs.appended(p)
+		}
+		neighborsWithBombs
+	}
+
+	def openTile(point: Point): Unit =
+		currentGameState = currentGameState.copy(board = addTileToBoardAtPoint(point, getTile(point).copy(cellType = Visible)))
 
 	def flag(point: Point): Unit =
 	{
@@ -94,6 +124,16 @@ object MinesweeperLogic {
 	val DefaultHeight: Int = 16
 	val DefaultNumMines: Int = 40
 	val DefaultDims: Dimensions = Dimensions(width = DefaultWidth, height = DefaultHeight)
+
+	val EasyWidth: Int = 8
+	val EasyHeight: Int = 8
+	val EasyNumMines: Int = 10
+	val EasyDims: Dimensions = Dimensions(width = EasyWidth, height = EasyHeight)
+
+	val HardWidth: Int = 30
+	val HardHeight: Int = 16
+	val HardNumMines: Int = 99
+	val HardDims: Dimensions = Dimensions(width = HardWidth, height = HardHeight)
 
 	def apply() = new MinesweeperLogic(new ScalaRandomGen(),
 	                                   DefaultDims,

@@ -5,7 +5,9 @@ import minesweeperlikegamepleasedontsuememichaelsoft.logic.GameState._
 case class GameState(
                     gridDims: Dimensions,
                     board: Seq[Seq[Tile]],
-                    gameOver: Boolean = false
+                    numMines: Int,
+                    gameOver: Boolean = false,
+                    initialTile: Boolean = true
                     ) {}
 
 object GameState {}
