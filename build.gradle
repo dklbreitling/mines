@@ -54,9 +54,10 @@ task zip(type: Zip) {
     dependsOn assemble
 
     from fileTree(dir: '.')
-    include 'src/tetris/logic/**.scala'
+//    include 'src/minesweeperlikegamepleasedontsuememichaelsoft/logic/**.scala'
+    include '*'
 
-    archiveFileName = 'tetris.zip'
+    archiveFileName = 'minesweeper.zip'
     destinationDir(file("$projectDir"))
 }
 

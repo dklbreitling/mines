@@ -8,6 +8,7 @@ import processing.core.{PApplet, PConstants}
 import processing.event.KeyEvent
 
 import java.awt.event
+import java.awt.event.KeyEvent._
 
 class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 
@@ -27,13 +28,21 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 			gameLogic.uncoverNextBomb()
 			drawGameOverScreen()
 			gameOver = true
+		} else if (gameLogic.hasWon) {
+
 		}
 	}
 
 	def drawGameOverScreen(): Unit =
 	{
 		setFillColor(Color.Red)
-		drawTextCentered("GAME OVER!", 20, screenArea.center)
+		drawTextCentered("GAME OVER!\nPress 'R' to try again.", 20, screenArea.center)
+	}
+
+	def drawGameWonScreen(): Unit =
+	{
+		setFillColor(Color.Green)
+		drawTextCentered("YOU WON!\nPress 'R' to try again.", 20, screenArea.center)
 	}
 
 	def drawGrid(): Unit =
@@ -42,7 +51,7 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 		val heightPerCell = screenArea.height / gridDims.height
 
 		for (p <- gridDims.allPointsInside) {
-			if (p == currentMousePositionAsPoint && !gameOver)
+			if (p == currentMousePositionAsPoint && gameLogic.isGameRunning)
 				drawCell(getCell(p), gameLogic.getTile(p), decreaseAlpha = true)
 			else
 				drawCell(getCell(p), gameLogic.getTile(p))
@@ -86,13 +95,19 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 	override def keyPressed(event: KeyEvent): Unit =
 	{
 		event.getKeyCode match {
+			 case VK_R     => {
+			 	if (!gameLogic.isGameRunning) {
+			 		gameLogic = MinesweeperLogic()
+			 		gameOver = false
+			 	}
+			 }
 			case _ => ()
 		}
 	}
 
 	override def mouseClicked(): Unit =
 	{
-		if (!gameOver) {
+		if (gameLogic.isGameRunning) {
 			if (mouseButton == PConstants.LEFT)
 				gameLogic.uncoverTile(currentMousePositionAsPoint)
 			else if (mouseButton == PConstants.RIGHT)

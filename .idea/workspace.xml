@@ -11,17 +11,15 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/Readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/game/MinesweeperLikeGamePleaseDontSueMeMichaelsoft$.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/game/MinesweeperLikeGamePleaseDontSueMeMichaelsoft$.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/game/MinesweeperLikeGamePleaseDontSueMeMichaelsoft.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/game/MinesweeperLikeGamePleaseDontSueMeMichaelsoft.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/logic/MinesweeperLogic$.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/logic/MinesweeperLogic$.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/logic/MinesweeperLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/scala/main/minesweeperlikegamepleasedontsuememichaelsoft/logic/MinesweeperLogic.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/scala/compilerAnalysis/compileScala.analysis" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/scala/compilerAnalysis/compileScala.analysis" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/engine/GameBase.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/GameBase.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/game/MinesweeperLikeGamePleaseDontSueMeMichaelsoft.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/game/MinesweeperLikeGamePleaseDontSueMeMichaelsoft.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/logic/CellType.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/logic/CellType.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/logic/GameState.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/logic/GameState.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/logic/MinesweeperLogic.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/logic/MinesweeperLogic.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/logic/Tile.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/minesweeperlikegamepleasedontsuememichaelsoft/logic/Tile.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +55,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -122,7 +121,7 @@
       <updated>1635525259417</updated>
       <workItem from="1635525261153" duration="692000" />
       <workItem from="1635613152825" duration="11928000" />
-      <workItem from="1635685231909" duration="13040000" />
+      <workItem from="1635685231909" duration="17332000" />
     </task>
     <servers />
   </component>
@@ -140,5 +139,8 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

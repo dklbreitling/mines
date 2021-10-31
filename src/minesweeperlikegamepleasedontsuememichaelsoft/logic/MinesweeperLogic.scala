@@ -15,6 +15,8 @@ class MinesweeperLogic(val randomGen: RandomGenerator,
 
 	var currentGameState: GameState = GameState(gridDims, initialBoard, DefaultNumMines)
 
+	def isGameRunning: Boolean = !(currentGameState.gameOver || (hasWon && currentGameState.initialTileSet))
+
 	def generateMines(): Unit =
 	{
 		for (_ <- 0 until currentGameState.numMines) {
@@ -27,10 +29,8 @@ class MinesweeperLogic(val randomGen: RandomGenerator,
 
 	def incrementCountersAroundPoint(point: Point): Unit =
 	{
-		val neighbors: Seq[Point] = NeighborOffsets.map(_ + point)
-		for (p <- neighbors if gridDims.allPointsInside.contains(p)) {
+		for (p <- neighborsOfPoint(point))
 			incrementCounter(p)
-		}
 	}
 
 	def incrementCounter(point: Point): Unit =
@@ -76,14 +76,11 @@ class MinesweeperLogic(val randomGen: RandomGenerator,
 		}
 	}
 
-	//	void OpenCellsStartingFrom(int i, int j)
-	//	{
-	//		Opened[i,j] = true;
-	//		ForEachNeighbor(i,j, (i1,j1)=>{
-	//			if (!Mines[i1,j1] && !Opened[i1,j1] && !Marked[i1,j1])
-	//				OpenCellsStartingFrom(i1, j1);
-	//		});
-	//	}
+	def hasWon: Boolean =
+	{
+		println(allHiddenBombs.forall(p => getTile(p).hasFlag) && currentlyFreeTiles.isEmpty && !currentGameState.gameOver)
+		allHiddenBombs.forall(p => getTile(p).hasFlag) && currentlyFreeTiles.isEmpty && !currentGameState.gameOver
+	}
 
 	def neighborsOfPoint(point: Point): Seq[Point] =
 		NeighborOffsets.map(_ + point).filter(p => gridDims.allPointsInside.contains(p))
@@ -104,9 +101,7 @@ class MinesweeperLogic(val randomGen: RandomGenerator,
 		currentGameState = currentGameState.copy(board = addTileToBoardAtPoint(point, getTile(point).copy(cellType = Visible)))
 
 	def flag(point: Point): Unit =
-	{
 		currentGameState = currentGameState.copy(board = addTileToBoardAtPoint(point, getTile(point).copy(hasFlag = !getTile(point).hasFlag)))
-	}
 
 	def addTileToBoardAtPoint(point: Point, tile: Tile): Seq[Seq[Tile]] =
 		currentGameState.board.updated(point.y, currentGameState.board(point.y).updated(point.x, tile))
