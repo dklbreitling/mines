@@ -77,7 +77,7 @@ class MinesweeperLogic(val randomGen: RandomGenerator,
 	}
 
 	def hasWon: Boolean =
-		allHiddenBombs.forall(p => getTile(p).hasFlag) && currentlyFreeTiles.isEmpty && !currentGameState.gameOver
+		allHiddenBombs.forall(p => getTile(p).hasFlag) && currentlyFreeTiles.isEmpty
 
 	def neighborsOfPoint(point: Point): Seq[Point] =
 		NeighborOffsets.map(_ + point).filter(p => gridDims.allPointsInside.contains(p))

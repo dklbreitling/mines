@@ -63,7 +63,7 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 		setFillColor(Color.decreaseAlpha(Color.Gray))
 		drawRectangle(topArea)
 		setFillColor(Color.Red)
-		drawTextCentered("EASY\n8x8, 10 mines", 40, Point(topArea.center.x, topArea.center.y + 8))
+		drawTextCentered("EASY\n8x8, 10 mines", 25, Point(topArea.center.x, topArea.center.y + 8))
 	}
 
 	def drawMediumBox(): Unit =
@@ -71,7 +71,7 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 		setFillColor(Color.decreaseAlpha(Color.Gray))
 		drawRectangle(midArea)
 		setFillColor(Color.Red)
-		drawTextCentered("MEDIUM\n16x16, 40 mines", 40, Point(midArea.center.x, midArea.center.y + 8))
+		drawTextCentered("MEDIUM\n16x16, 40 mines", 25, Point(midArea.center.x, midArea.center.y + 8))
 	}
 
 	def drawHardBox(): Unit =
@@ -79,19 +79,19 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 		setFillColor(Color.decreaseAlpha(Color.Gray))
 		drawRectangle(bottomArea)
 		setFillColor(Color.Red)
-		drawTextCentered("HARD\n30x16, 99 mines", 40, Point(bottomArea.center.x, bottomArea.center.y + 8))
+		drawTextCentered("HARD\n30x16, 99 mines", 25, Point(bottomArea.center.x, bottomArea.center.y + 8))
 	}
 
 	def drawGameOverScreen(): Unit =
 	{
 		setFillColor(Color.Red)
-		drawTextCentered("GAME OVER!\nPress 'R' to try again.", 20, screenArea.center)
+		drawTextCentered("GAME OVER!\nPress 'Q' to exit.", 20, screenArea.center)
 	}
 
 	def drawGameWonScreen(): Unit =
 	{
 		setFillColor(Color.Green)
-		drawTextCentered("YOU WON!\nPress 'R' to try again.", 20, screenArea.center)
+		drawTextCentered("YOU WON!\nPress 'Q' to exit.", 20, screenArea.center)
 	}
 
 	def drawGrid(): Unit =
@@ -151,14 +151,10 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 	override def keyPressed(event: KeyEvent): Unit =
 	{
 		event.getKeyCode match {
-			case VK_R => {
+			case VK_Q =>
 				if (!gameLogic.isGameRunning) {
-					gameLogic = MinesweeperLogic()
-					gameOver = false
-					gridDims = MinesweeperLogic.DefaultDims
-					reinitSize()
+					exit()
 				}
-			}
 			case _ => ()
 		}
 	}
@@ -204,6 +200,9 @@ class MinesweeperLikeGamePleaseDontSueMeMichaelsoft extends GameBase {
 
 	override def setup(): Unit =
 	{
+		textMode(PConstants.SHAPE)
+		val lato = createFont("Lato-Black.ttf", 50, false)
+		textFont(lato)
 		// Fonts are loaded lazily, so when we call text()
 		// for the first time, there is significant lag.
 		// This prevents it from happening during gameplay.
