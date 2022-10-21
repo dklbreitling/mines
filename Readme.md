@@ -1,4 +1,4 @@
-# Minesweeper-like-game (please don't sue me, Michaelsoft)
+# Mines Game
 
 In bash type `./gradlew run` to run the game. Not tested on Windows (but `gradlew run` or using IntelliJ run button should work). Java 8.
 
